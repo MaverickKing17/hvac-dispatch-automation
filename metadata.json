@@ -1,0 +1,7 @@
+{
+  "name": "Omega Heating and AC - AI Dispatcher Landing Page",
+  "description": "A high-converting landing page for a Toronto-based HVAC company featuring an AI-powered instant dispatcher, built with React, Tailwind CSS, and Gemini API integration.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
