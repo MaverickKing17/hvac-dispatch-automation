@@ -180,8 +180,8 @@ const App: React.FC = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 to-blue-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
               <div className="relative bg-white p-2 rounded-3xl shadow-2xl overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" 
-                  alt="Toronto HVAC Technician" 
+                  src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1024&auto=format&fit=crop" 
+                  alt="Professional Toronto HVAC Technician working on a residential unit" 
                   className="rounded-2xl object-cover w-full h-[450px] transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-5 rounded-xl shadow-lg border border-white">
