@@ -1,20 +1,60 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+HVAC AI Dispatch & CRM Automation Suite
+Powering 24/7 Lead Generation for Local Service Providers
+📌 Project Overview
+This repository contains the architecture and logic for a high-performance AI Receptionist specifically tuned for the HVAC industry in the Toronto/GTA market. The system bridges the gap between missed customer calls and booked appointments by using low-latency voice AI integrated directly into a professional CRM.
 
-# Run and deploy your AI Studio app
+The Problem: Small to mid-sized HVAC companies lose thousands in revenue every month due to missed after-hours calls or slow lead entry. The Solution: A 24/7 AI Voice Agent that qualifies leads, captures customer intent, and syncs data to a CRM in real-time.
 
-This contains everything you need to run your app locally.
+🛠 Tech Stack
+Voice Engine: Retell AI (LLM-powered voice processing)
 
-View your app in AI Studio: https://ai.studio/apps/drive/1HSERdOOIT1xtC6U7lmluW3T-SGhWXlmF
+Automation Layer: Zoho Flow (Webhook-based data routing)
 
-## Run Locally
+Database/CRM: Zoho CRM (Lead management and tracking)
 
-**Prerequisites:**  Node.js
+Deployment: Webhook-to-REST API architecture
 
+🧠 Core Logic & Documentation
+1. The Retell Agent Prompt ("Alex")
+The "brain" of the dispatcher is located in the /prompts folder. It is designed with a "Local First" personality:
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Identity: Alex, a professional, helpful dispatcher for Omega Heating and AC.
+
+Objective: Calmly handle emergency furnace/AC calls, gather the Name, Address, and Issue, and reassure the customer that a technician will be notified.
+
+Safety Rails: Does not give pricing; focuses on lead qualification and emergency triage.
+
+2. Zoho Flow Logic (The Bridge)
+The automation workflow follows this logic:
+
+Trigger: Webhook Received (JSON payload from Retell).
+
+Filter: Checks for valid end_call signal to ensure the conversation is finished.
+
+Action: Create or Update Lead in Zoho CRM.
+
+Mapping:
+
+Webhook: name → CRM: Last Name
+
+Webhook: address → CRM: Street
+
+Webhook: service_issue → CRM: Description
+
+📈 Business Impact
+Zero Missed Leads: 24/7 coverage without the $3,500/mo cost of a live answering service.
+
+Instant CRM Entry: Eliminates manual data entry and human error.
+
+Scalability: This framework is designed to be "templated" and deployed across multiple service territories (North York, Mississauga, Scarborough).
+
+🚀 How to Deploy
+Import the agent_config.json into your Retell Dashboard.
+
+Set the Webhook URL in Retell to your Zoho Flow endpoint.
+
+Ensure the "Create Lead" module in Zoho CRM has the custom field Service_Issue mapped correctly.
+
+Test via the Retell Chat sandbox and verify the lead appears in the CRM dashboard.
+
+Developed by [Your Name/Username] – Dedicated to helping local HVAC businesses scale through intelligent automation.
