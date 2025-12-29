@@ -17,54 +17,72 @@ import {
   Bot,
   Award,
   Banknote,
-  Users
+  Users,
+  Search,
+  ChevronDown
 } from 'lucide-react';
 import AIDispatcherChat from './components/AIDispatcherChat';
 
 const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const services = [
     {
       id: 'furnace',
-      title: 'Furnace Repair & Install',
-      description: 'We utilize precision diagnostic sensors and high-efficiency heat exchanger technology. Our ENERGY STAR® certified installations are optimized for the Toronto climate, ensuring your home stays warm even during -30°C polar vortex events while significantly lowering your monthly utility bills.',
+      title: 'Emergency Furnace Repair Toronto',
+      description: 'When the temperature drops in Toronto, you need a furnace that works. We specialize in TSSA-certified repair and high-efficiency installation of all major brands like Lennox, Carrier, and York. Our technicians utilize thermal imaging and precision combustion analysis to ensure your heating system operates at peak efficiency during GTA winters.',
       icon: <Flame className="text-orange-500" size={32} />
     },
     {
       id: 'ac',
-      title: 'AC Service & Maintenance',
-      description: 'Advanced SEER2-compliant cooling solutions engineered to tackle Ontario\'s humid summers. Our technicians use digital refrigerant gauges for hyper-accurate multi-point tune-ups, preventing 95% of common summer breakdowns before they happen.',
+      title: 'AC Maintenance & GTA Cooling',
+      description: 'Don\'t let the humid Ontario summer catch you off guard. Our multi-point AC tune-ups include refrigerant leak detection, evaporator coil cleaning, and electrical system checks. We provide energy-efficient cooling solutions for North York, Scarborough, and Etobicoke homeowners looking to reduce their carbon footprint and hydro bills.',
       icon: <ThermometerSnowflake className="text-blue-500" size={32} />
     },
     {
       id: 'emergency',
-      title: '24/7 Emergency Repairs',
-      description: 'Critical failures happen at the worst times. Our proprietary AI Dispatcher monitors our fleet\'s real-time GPS locations across the GTA, automatically routing the most qualified technician to your door within minutes—completely bypassing traditional hold times.',
+      title: '24/7 AI-Powered Dispatching',
+      description: 'We are the first HVAC company in Toronto to utilize a fully integrated AI Dispatcher. This proprietary technology routes our nearest licensed technician to your home in real-time. Whether it\'s a 2 AM boiler leak or a Christmas Day furnace failure, our AI ensures you never talk to an answering machine.',
       icon: <Zap className="text-yellow-500" size={32} />
     }
   ];
 
   const differentiators = [
     {
-      title: "Certified Experts",
-      description: "Every Omega technician is TSSA-certified and undergoes rigorous background checks and seasonal training.",
+      title: "Certified Toronto Pros",
+      description: "Our team consists of TSSA-licensed gas fitters and 313A refrigeration mechanics who understand the specific building codes of the City of Toronto.",
       icon: <Award className="text-blue-600" size={32} />
     },
     {
-      title: "Upfront Pricing",
-      description: "No hourly surprises. We provide a fixed-price quote before any work starts. What we quote is what you pay.",
+      title: "Transparent Flat-Rate Pricing",
+      description: "We use upfront pricing guides so you know exactly what the job costs before we start. No hidden 'GTA premium' surcharges or hourly padding.",
       icon: <Banknote className="text-green-600" size={32} />
     },
     {
-      title: "100% Satisfaction",
-      description: "Our job isn't done until you're comfortable. We offer a 1-year warranty on all labour and parts.",
+      title: "Industry Leading Warranty",
+      description: "Every repair is backed by our 100% Satisfaction Guarantee. We offer a minimum 1-year parts and labour warranty on all service calls.",
       icon: <ShieldCheck className="text-orange-600" size={32} />
     },
     {
-      title: "Local GTA Presence",
-      description: "From Scarborough to Etobicoke, we are your neighbours. We know the unique HVAC needs of Toronto homes.",
+      title: "Rapid North York Response",
+      description: "Centrally located in North York, we can reach most GTA neighbourhoods in under an hour during emergency peak times.",
       icon: <Users className="text-purple-600" size={32} />
+    }
+  ];
+
+  const faqs = [
+    {
+      q: "How fast can you respond to a furnace emergency in Toronto?",
+      a: "With our AI Dispatcher technology, we typically have a technician at your door in the GTA within 60-90 minutes of your request, 24/7."
+    },
+    {
+      q: "Do you service older homes in neighbourhoods like Old Toronto or The Beach?",
+      a: "Yes! Our technicians are specially trained in retrofitting high-efficiency HVAC systems into Toronto's historic homes while maintaining structural integrity."
+    },
+    {
+      q: "What brands of air conditioners and furnaces do you install?",
+      a: "We are authorized dealers for Carrier, Lennox, and York, but our repair experts are certified to service all makes and models found in Ontario homes."
     }
   ];
 
@@ -74,12 +92,29 @@ const App: React.FC = () => {
     { author: "James T.", location: "Etobicoke", text: "Best HVAC experience in Toronto. The instant dispatch is a game-changer. No more listening to hold music!" }
   ];
 
+  const scrollTo = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // height of the nav
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    setMobileMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col selection:bg-orange-100 selection:text-orange-900">
       {/* Top Banner */}
       <div className="bg-blue-950 text-white py-2 px-4 text-xs sm:text-sm font-medium flex justify-center items-center gap-4 border-b border-blue-900">
-        <span className="flex items-center gap-1.5"><MapPin size={14} className="text-orange-400" /> Serving the GTA & North York</span>
-        <span className="hidden sm:flex items-center gap-1.5"><Clock size={14} className="text-orange-400" /> Open 24/7/365</span>
+        <span className="flex items-center gap-1.5"><MapPin size={14} className="text-orange-400" /> Serving Downtown Toronto, North York & GTA</span>
+        <span className="hidden sm:flex items-center gap-1.5"><Clock size={14} className="text-orange-400" /> 24/7 Dispatch Ready</span>
         <a href="tel:4165550199" className="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
           <Phone size={14} className="text-orange-400" /> (416) 555-0199
         </a>
@@ -87,7 +122,7 @@ const App: React.FC = () => {
 
       {/* Navigation */}
       <nav className="sticky top-0 bg-white/95 backdrop-blur-md z-40 border-b border-gray-100 py-4 px-6 md:px-12 flex justify-between items-center">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <div className="bg-blue-900 text-white p-2 rounded-lg rotate-3">
             <ThermometerSnowflake size={24} />
           </div>
@@ -95,18 +130,18 @@ const App: React.FC = () => {
         </div>
 
         <div className="hidden md:flex gap-8 font-semibold text-sm text-gray-600">
-          <a href="#services" className="hover:text-blue-900 transition-colors">Services</a>
-          <a href="#why-us" className="hover:text-blue-900 transition-colors">Why Omega?</a>
-          <a href="#ai-edge" className="hover:text-blue-900 transition-colors">AI Dispatch</a>
-          <a href="#reviews" className="hover:text-blue-900 transition-colors">Reviews</a>
-          <a href="#contact" className="hover:text-blue-900 transition-colors">Book Now</a>
+          <button onClick={() => scrollTo('services')} className="hover:text-blue-900 transition-colors">Services</button>
+          <button onClick={() => scrollTo('why-us')} className="hover:text-blue-900 transition-colors">Why Omega?</button>
+          <button onClick={() => scrollTo('ai-edge')} className="hover:text-blue-900 transition-colors">AI Dispatch</button>
+          <button onClick={() => scrollTo('reviews')} className="hover:text-blue-900 transition-colors">Reviews</button>
+          <button onClick={() => scrollTo('contact')} className="hover:text-blue-900 transition-colors">Book Now</button>
         </div>
 
         <div className="flex gap-4">
           <a href="tel:4165550199" className="hidden lg:flex bg-orange-600 hover:bg-orange-700 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-orange-200 transition-all items-center gap-2">
             <Phone size={18} /> CALL NOW
           </a>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-gray-600">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-gray-600 p-2">
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
@@ -114,14 +149,14 @@ const App: React.FC = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-50 pt-20 px-8 flex flex-col gap-8 md:hidden">
+        <div className="fixed inset-0 bg-white z-50 pt-20 px-8 flex flex-col gap-8 md:hidden animate-in slide-in-from-right duration-300">
           <button onClick={() => setMobileMenuOpen(false)} className="absolute top-6 right-6 text-gray-600">
             <X size={32} />
           </button>
-          <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold">Services</a>
-          <a href="#why-us" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold">Why Omega?</a>
-          <a href="#ai-edge" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold">The AI Edge</a>
-          <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-bold">Testimonials</a>
+          <button onClick={() => scrollTo('services')} className="text-2xl font-bold text-left">Services</button>
+          <button onClick={() => scrollTo('why-us')} className="text-2xl font-bold text-left">Why Omega?</button>
+          <button onClick={() => scrollTo('ai-edge')} className="text-2xl font-bold text-left">The AI Edge</button>
+          <button onClick={() => scrollTo('reviews')} className="text-2xl font-bold text-left">Testimonials</button>
           <a href="tel:4165550199" className="bg-blue-900 text-white p-4 rounded-xl text-center font-bold text-xl flex items-center justify-center gap-3">
             <Phone /> (416) 555-0199
           </a>
@@ -143,34 +178,30 @@ const App: React.FC = () => {
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-blue-950 leading-[1.1] mb-6">
               Don't Freeze Tonight. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">24/7 Heating & AC</span> <br />
-              Experts in Toronto.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">Toronto's Best HVAC</span> <br />
+              Experts are Ready.
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Serving the GTA and North York with premium HVAC solutions. Powered by <span className="font-bold text-blue-900 underline decoration-orange-400 decoration-2">Instant AI Dispatch</span>—get a technician scheduled in under 60 seconds, even at 3 AM.
+              Searching for <span className="font-bold text-blue-900 italic">"furnace repair near me"</span> in the GTA? Omega provides premium heating and air conditioning services powered by <span className="font-bold text-blue-900 underline decoration-orange-400 decoration-2">Instant AI Dispatch</span>. Get a technician scheduled in under 60 seconds.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a href="tel:4165550199" className="bg-blue-900 hover:bg-blue-950 text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-xl shadow-blue-200 transition-all flex items-center justify-center gap-3 group">
                 <Phone size={24} className="group-hover:shake" /> CALL (416) 555-0199
               </a>
-              <a href="#contact" className="bg-white hover:bg-gray-50 text-blue-900 border-2 border-blue-900 px-10 py-5 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2">
+              <button onClick={() => scrollTo('contact')} className="bg-white hover:bg-gray-50 text-blue-900 border-2 border-blue-900 px-10 py-5 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2">
                 Request a Quote <ArrowRight size={20} />
-              </a>
+              </button>
             </div>
 
             <div className="mt-12 flex flex-wrap justify-center lg:justify-start gap-8 items-center text-gray-500">
               <div className="flex items-center gap-2">
                 <div className="flex text-orange-500"><Star fill="currentColor" size={16}/><Star fill="currentColor" size={16}/><Star fill="currentColor" size={16}/><Star fill="currentColor" size={16}/><Star fill="currentColor" size={16}/></div>
-                <span className="font-bold text-gray-900">4.9/5 Rating</span>
+                <span className="font-bold text-gray-900">4.9/5 Average Rating</span>
               </div>
               <div className="flex items-center gap-2">
                 <ShieldCheck className="text-green-500" />
-                <span className="font-medium">Licensed & Insured</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="text-green-500" />
-                <span className="font-medium">No Hidden Fees</span>
+                <span className="font-medium">TSSA Licensed & Insured</span>
               </div>
             </div>
           </div>
@@ -181,12 +212,12 @@ const App: React.FC = () => {
               <div className="relative bg-white p-2 rounded-3xl shadow-2xl overflow-hidden">
                 <img 
                   src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1024&auto=format&fit=crop" 
-                  alt="Professional Toronto HVAC Technician working on a residential unit" 
+                  alt="Certified Toronto HVAC Technician providing emergency furnace repair" 
                   className="rounded-2xl object-cover w-full h-[450px] transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-5 rounded-xl shadow-lg border border-white">
-                  <p className="text-sm font-bold text-blue-900 mb-1 italic">"The fastest service in the GTA. Technician arrived within 45 minutes."</p>
-                  <p className="text-xs text-gray-500 font-medium">— Verified Customer in North York</p>
+                  <p className="text-sm font-bold text-blue-900 mb-1 italic">"The most reliable furnace repair service in North York. Highly recommend."</p>
+                  <p className="text-xs text-gray-500 font-medium">— Local Toronto Homeowner</p>
                 </div>
               </div>
             </div>
@@ -198,8 +229,8 @@ const App: React.FC = () => {
       <section id="services" className="py-24 bg-gray-50 px-6 border-y border-gray-100">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-blue-950 mb-4 tracking-tight">Expert HVAC Services</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">From emergency repairs to new high-efficiency installations, we handle it all with precision.</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-blue-950 mb-4 tracking-tight">Premium HVAC Solutions for Toronto</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">From emergency central air conditioning service to high-efficiency furnace installations, we provide the GTA's most responsive HVAC care.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -210,9 +241,9 @@ const App: React.FC = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-blue-900 mb-4">{service.title}</h3>
                 <p className="text-gray-600 leading-relaxed mb-6 text-sm">{service.description}</p>
-                <a href="#contact" className="text-orange-600 font-bold flex items-center gap-2 group mt-auto pt-4">
-                  Learn More <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </a>
+                <button onClick={() => scrollTo('contact')} className="text-orange-600 font-bold flex items-center gap-2 group mt-auto pt-4 text-left">
+                  Request Service <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </button>
               </div>
             ))}
           </div>
@@ -223,8 +254,8 @@ const App: React.FC = () => {
       <section id="why-us" className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-blue-950 mb-4 tracking-tight">Why Toronto Homeowners Trust Omega</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">Premium service isn't just about technology—it's about the people and promises behind it.</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-blue-950 mb-4 tracking-tight">The Best Rated HVAC Team in Ontario</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">We've built our reputation on fast responses, technical excellence, and the smartest dispatch system in the industry.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -238,26 +269,6 @@ const App: React.FC = () => {
               </div>
             ))}
           </div>
-
-          <div className="mt-20 p-8 md:p-12 bg-blue-50 rounded-[2.5rem] border border-blue-100 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex-1">
-              <h3 className="text-2xl font-extrabold text-blue-900 mb-4">Beyond the AI: Our Human Promise</h3>
-              <p className="text-blue-800/80 leading-relaxed">
-                While our AI handles the logistics at light-speed, your home is serviced by real Toronto locals. Our human dispatch team supervises every AI interaction 24/7 to ensure no homeowner is ever left out in the cold.
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <div className="text-center">
-                <p className="text-4xl font-black text-blue-900">15+</p>
-                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">Years in GTA</p>
-              </div>
-              <div className="w-px h-12 bg-blue-200"></div>
-              <div className="text-center">
-                <p className="text-4xl font-black text-blue-900">10k+</p>
-                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">Homes Serviced</p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -270,10 +281,9 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
-              <h2 className="text-3xl md:text-5xl font-extrabold mb-8 text-orange-400">The 'Instant Dispatch' Advantage</h2>
+              <h2 className="text-3xl md:text-5xl font-extrabold mb-8 text-orange-400">Toronto's First AI-Driven Dispatch</h2>
               <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                Traditional HVAC companies make you wait on hold for minutes, only to tell you someone might call you back in 4 hours. 
-                <span className="block mt-4 font-bold text-white">We've solved that problem.</span>
+                Most Toronto HVAC companies are stuck in the 90s. While they leave you on hold with elevator music, our <span className="text-white font-bold">Intelligent Dispatch Engine</span> is already analyzing technician proximity to get you help faster.
               </p>
               
               <ul className="space-y-6">
@@ -282,8 +292,8 @@ const App: React.FC = () => {
                     <Clock size={24} />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-1">Zero Wait Times</h4>
-                    <p className="text-blue-200">Our 24/7 AI Dispatcher answers instantly at any hour. No music, no transfers, just immediate action.</p>
+                    <h4 className="text-xl font-bold mb-1">Instant Emergency Queueing</h4>
+                    <p className="text-blue-200">Our 24/7 AI system processes your furnace or AC emergency instantly, bypassing human reception errors and delays.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
@@ -291,64 +301,96 @@ const App: React.FC = () => {
                     <Zap size={24} />
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold mb-1">Smarter Scheduling</h4>
-                    <p className="text-blue-200">AI automatically routes the nearest available technician in North York or the GTA directly to your door.</p>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <div className="bg-orange-500/20 text-orange-400 p-3 rounded-xl h-fit">
-                    <ShieldCheck size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-1">Accurate Updates</h4>
-                    <p className="text-blue-200">Receive real-time text updates with your technician's ETA and bio. You're never in the dark.</p>
+                    <h4 className="text-xl font-bold mb-1">Real-Time GPS Tracking</h4>
+                    <p className="text-blue-200">The AI identifies the closest technician in your Toronto neighbourhood—whether you're in York, East York, or Scarborough.</p>
                   </div>
                 </li>
               </ul>
             </div>
 
-            <div className="lg:w-1/2 bg-blue-900/50 p-8 md:p-12 rounded-[2.5rem] border border-blue-800 shadow-2xl">
-              <div className="text-center mb-10">
+            <div className="lg:w-1/2 bg-blue-900/50 p-8 md:p-12 rounded-[2.5rem] border border-blue-800 shadow-2xl text-center">
                 <div className="inline-block p-4 bg-orange-500 rounded-full mb-6 shadow-lg shadow-orange-500/30">
                   <Bot size={48} />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold mb-2 italic">"I had a technician booked at 2:45 AM while I was still in my pyjamas."</h3>
-                <p className="text-blue-300">— Recent Emergency Customer</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-blue-950/50 rounded-2xl border border-blue-800">
-                  <span className="text-sm font-medium">System Response Time</span>
-                  <span className="text-orange-400 font-bold">&lt; 2 Seconds</span>
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 italic">The Future of Home Comfort</h3>
+                <p className="text-blue-200 mb-8 leading-relaxed">"By using AI to handle the scheduling logistics, we allow our technicians to focus 100% on what they do best: fixing your HVAC system."</p>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-blue-950/50 p-4 rounded-xl border border-blue-800">
+                        <p className="text-2xl font-bold text-orange-400">98%</p>
+                        <p className="text-xs uppercase tracking-widest font-bold">Faster Booking</p>
+                    </div>
+                    <div className="bg-blue-950/50 p-4 rounded-xl border border-blue-800">
+                        <p className="text-2xl font-bold text-orange-400">24/7</p>
+                        <p className="text-xs uppercase tracking-widest font-bold">Always Online</p>
+                    </div>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-blue-950/50 rounded-2xl border border-blue-800">
-                  <span className="text-sm font-medium">Emergency Call Reliability</span>
-                  <span className="text-orange-400 font-bold">100%</span>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-blue-950/50 rounded-2xl border border-blue-800">
-                  <span className="text-sm font-medium">Technician Match Accuracy</span>
-                  <span className="text-orange-400 font-bold">99.4%</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Service Areas - SEO Powerhouse */}
+      <section className="py-20 px-6 bg-gray-50 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-blue-900">Serving the Greater Toronto Area</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm font-medium text-gray-500">
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> North York</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Scarborough</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Etobicoke</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Downtown Toronto</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> East York</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> York</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Thornhill</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Richmond Hill</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Markham</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Vaughan</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Mississauga</div>
+            <div className="flex items-center gap-2"><MapPin size={14} className="text-orange-500"/> Pickering</div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section - SEO Powerhouse */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-blue-950 text-center mb-16">HVAC Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className="border-2 border-gray-50 rounded-2xl overflow-hidden">
+                <button 
+                  onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                  className="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-bold text-blue-900">{faq.q}</span>
+                  <ChevronDown className={`transition-transform duration-300 ${activeFaq === i ? 'rotate-180' : ''}`} />
+                </button>
+                {activeFaq === i && (
+                  <div className="px-6 pb-6 text-gray-600 leading-relaxed animate-in slide-in-from-top-2">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Social Proof / Reviews */}
-      <section id="reviews" className="py-24 px-6 bg-white">
+      <section id="reviews" className="py-24 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-blue-950 mb-4 tracking-tight">Trusted Across the GTA</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-blue-950 mb-4 tracking-tight">GTA Homeowner Testimonials</h2>
             <div className="flex justify-center gap-1 text-orange-500 mb-4">
               <Star fill="currentColor" size={24} /><Star fill="currentColor" size={24} /><Star fill="currentColor" size={24} /><Star fill="currentColor" size={24} /><Star fill="currentColor" size={24} />
             </div>
-            <p className="text-gray-500 font-bold uppercase tracking-widest text-sm">Over 500+ 5-Star Reviews</p>
+            <p className="text-gray-500 font-bold uppercase tracking-widest text-sm">Verified Local Reviews</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {reviews.map((review, i) => (
-              <div key={i} className="bg-gray-50 p-8 rounded-3xl border border-gray-100 flex flex-col justify-between">
+              <div key={i} className="bg-white p-8 rounded-3xl border border-gray-100 flex flex-col justify-between shadow-sm">
                 <div>
                   <div className="flex text-orange-500 mb-4">
                     {[...Array(5)].map((_, j) => <Star key={j} fill="currentColor" size={16}/>)}
@@ -370,7 +412,7 @@ const App: React.FC = () => {
         <div className="max-w-3xl mx-auto bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 relative z-10">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-extrabold text-blue-950 mb-4">Book Your Service Call</h2>
-            <p className="text-gray-600">Fill out the form below or use our <span className="font-bold text-blue-900">AI Dispatcher</span> for faster booking.</p>
+            <p className="text-gray-600">Fill out the form below for a high-priority dispatch or use the <span className="font-bold text-blue-900 underline">AI Chat Widget</span> for instant routing.</p>
           </div>
 
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
@@ -387,22 +429,22 @@ const App: React.FC = () => {
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">Service Needed</label>
               <select className="w-full bg-gray-50 border-gray-200 border-2 rounded-2xl p-4 focus:ring-2 focus:ring-blue-600 outline-none transition-all appearance-none cursor-pointer">
-                <option>Furnace Repair/Emergency</option>
-                <option>AC Repair/Emergency</option>
-                <option>Seasonal Maintenance</option>
-                <option>New Installation Quote</option>
-                <option>Other</option>
+                <option>Furnace Repair (Emergency)</option>
+                <option>AC Repair (Emergency)</option>
+                <option>Furnace/AC Installation Quote</option>
+                <option>Seasonal Maintenance Plan</option>
+                <option>Duct Cleaning & Indoor Air Quality</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Issue Description (Optional)</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Issue Details</label>
               <textarea placeholder="Tell us what's happening..." rows={4} className="w-full bg-gray-50 border-gray-200 border-2 rounded-2xl p-4 focus:ring-2 focus:ring-blue-600 outline-none transition-all resize-none"></textarea>
             </div>
-            <button className="w-full bg-blue-900 hover:bg-blue-950 text-white py-5 rounded-2xl font-extrabold text-xl shadow-xl shadow-blue-200 transition-all flex items-center justify-center gap-3">
-              REQUEST DISPATCH <ArrowRight />
+            <button className="w-full bg-blue-900 hover:bg-blue-950 text-white py-5 rounded-2xl font-extrabold text-xl shadow-xl shadow-blue-200 transition-all flex items-center justify-center gap-3 active:scale-95">
+              REQUEST PRIORITY DISPATCH <ArrowRight />
             </button>
-            <p className="text-center text-xs text-gray-400 mt-4">
-              By clicking, you agree to be contacted via phone/text. Message and data rates may apply.
+            <p className="text-center text-[10px] text-gray-400 mt-4 leading-tight">
+              By submitting, you consent to receive SMS/Phone communications regarding your service request. We respect your privacy in accordance with CASL and GDPR.
             </p>
           </form>
         </div>
@@ -412,13 +454,13 @@ const App: React.FC = () => {
       <footer className="bg-gray-900 text-gray-400 py-16 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-2">
-            <div className="flex items-center gap-2 mb-6 text-white">
+            <div className="flex items-center gap-2 mb-6 text-white cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <div className="bg-blue-600 p-2 rounded-lg">
                 <ThermometerSnowflake size={24} />
               </div>
               <span className="text-2xl font-bold tracking-tight">OMEGA<span className="text-orange-500">HVAC</span></span>
             </div>
-            <p className="mb-8 max-w-sm">Toronto's premier choice for intelligent HVAC services. We combine classic Canadian service values with modern AI efficiency.</p>
+            <p className="mb-8 max-w-sm">Toronto's premier choice for high-efficiency HVAC solutions. From historic Old Toronto homes to new condos in North York, we provide the 24/7 service you deserve.</p>
             <div className="flex gap-4">
               <a href="tel:4165550199" className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 transition-colors">
                 <Phone size={20} />
@@ -432,11 +474,11 @@ const App: React.FC = () => {
           <div>
             <h4 className="text-white font-bold mb-6 uppercase tracking-widest text-sm">Services</h4>
             <ul className="space-y-4 text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Furnace Repair</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">AC Installation</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Maintenance Plans</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Duct Cleaning</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Smart Thermostats</a></li>
+              <li><button onClick={() => scrollTo('services')} className="hover:text-white transition-colors text-left">Toronto Furnace Repair</button></li>
+              <li><button onClick={() => scrollTo('services')} className="hover:text-white transition-colors text-left">GTA AC Installation</button></li>
+              <li><button onClick={() => scrollTo('why-us')} className="hover:text-white transition-colors text-left">Maintenance Plans</button></li>
+              <li><button onClick={() => scrollTo('contact')} className="hover:text-white transition-colors text-left">Duct Cleaning</button></li>
+              <li><button onClick={() => scrollTo('ai-edge')} className="hover:text-white transition-colors text-left">Smart Home HVAC</button></li>
             </ul>
           </div>
 
@@ -451,7 +493,7 @@ const App: React.FC = () => {
         </div>
         
         <div className="max-w-7xl mx-auto pt-12 mt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <p>© 2024 Omega Heating and AC. An Omega Business Solution.</p>
+          <p>© 2024 Omega Heating and AC. Toronto's AI-Powered HVAC Solution.</p>
           <div className="flex gap-8">
             <a href="#" className="hover:text-white">Privacy Policy</a>
             <a href="#" className="hover:text-white">Terms of Service</a>
