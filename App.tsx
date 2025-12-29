@@ -28,19 +28,19 @@ const App: React.FC = () => {
     {
       id: 'furnace',
       title: 'Furnace Repair & Install',
-      description: 'Expert diagnostics and high-efficiency installation to keep your Toronto home warm.',
+      description: 'We utilize precision diagnostic sensors and high-efficiency heat exchanger technology. Our ENERGY STAR® certified installations are optimized for the Toronto climate, ensuring your home stays warm even during -30°C polar vortex events while significantly lowering your monthly utility bills.',
       icon: <Flame className="text-orange-500" size={32} />
     },
     {
       id: 'ac',
       title: 'AC Service & Maintenance',
-      description: 'Precision cooling solutions for humid GTA summers. Energy-saving tune-ups.',
+      description: 'Advanced SEER2-compliant cooling solutions engineered to tackle Ontario\'s humid summers. Our technicians use digital refrigerant gauges for hyper-accurate multi-point tune-ups, preventing 95% of common summer breakdowns before they happen.',
       icon: <ThermometerSnowflake className="text-blue-500" size={32} />
     },
     {
       id: 'emergency',
       title: '24/7 Emergency Repairs',
-      description: 'No heat at 3 AM? Our AI dispatcher routes our nearest technician to your door instantly.',
+      description: 'Critical failures happen at the worst times. Our proprietary AI Dispatcher monitors our fleet\'s real-time GPS locations across the GTA, automatically routing the most qualified technician to your door within minutes—completely bypassing traditional hold times.',
       icon: <Zap className="text-yellow-500" size={32} />
     }
   ];
@@ -209,8 +209,8 @@ const App: React.FC = () => {
                   {service.icon}
                 </div>
                 <h3 className="text-2xl font-bold text-blue-900 mb-4">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">{service.description}</p>
-                <a href="#contact" className="text-orange-600 font-bold flex items-center gap-2 group">
+                <p className="text-gray-600 leading-relaxed mb-6 text-sm">{service.description}</p>
+                <a href="#contact" className="text-orange-600 font-bold flex items-center gap-2 group mt-auto">
                   Learn More <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
