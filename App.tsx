@@ -178,15 +178,15 @@ const App: React.FC = () => {
           <div className="flex-1 w-full max-w-xl">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 to-blue-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-              <div className="relative bg-white p-2 rounded-3xl shadow-2xl">
+              <div className="relative bg-white p-2 rounded-3xl shadow-2xl overflow-hidden">
                 <img 
-                  src="https://picsum.photos/seed/hvac/800/600" 
+                  src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" 
                   alt="Toronto HVAC Technician" 
-                  className="rounded-2xl object-cover w-full h-[400px]"
+                  className="rounded-2xl object-cover w-full h-[450px] transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-4 rounded-xl shadow-lg border border-white">
-                  <p className="text-sm font-bold text-blue-900 mb-1 italic">"The fastest service in the GTA."</p>
-                  <p className="text-xs text-gray-500">— Verified Customer in North York</p>
+                <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-5 rounded-xl shadow-lg border border-white">
+                  <p className="text-sm font-bold text-blue-900 mb-1 italic">"The fastest service in the GTA. Technician arrived within 45 minutes."</p>
+                  <p className="text-xs text-gray-500 font-medium">— Verified Customer in North York</p>
                 </div>
               </div>
             </div>
@@ -204,13 +204,13 @@ const App: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service) => (
-              <div key={service.id} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+              <div key={service.id} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col">
                 <div className="mb-6 bg-gray-50 w-16 h-16 flex items-center justify-center rounded-2xl">
                   {service.icon}
                 </div>
                 <h3 className="text-2xl font-bold text-blue-900 mb-4">{service.title}</h3>
                 <p className="text-gray-600 leading-relaxed mb-6 text-sm">{service.description}</p>
-                <a href="#contact" className="text-orange-600 font-bold flex items-center gap-2 group mt-auto">
+                <a href="#contact" className="text-orange-600 font-bold flex items-center gap-2 group mt-auto pt-4">
                   Learn More <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
@@ -230,7 +230,7 @@ const App: React.FC = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
             {differentiators.map((item, idx) => (
               <div key={idx} className="flex flex-col items-center text-center">
-                <div className="mb-6 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-sm">
+                <div className="mb-6 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-sm transition-colors hover:bg-white hover:border-blue-100">
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-bold text-blue-900 mb-3">{item.title}</h3>
